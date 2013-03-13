@@ -10,7 +10,6 @@ var needsReload = function () {
 	$("#search input").focus();
 	url = api.replace("#hashtag",hashtag);
 	$.getJSON(url, function(data) {
-
 		if (data.data[0].images.standard_resolution.url!=latest) {
 			console.log("reload");
 			showImage(data.data[0].images.standard_resolution.url);
@@ -56,10 +55,10 @@ function setHashtag() {
 }
 
 function showImage(url) {
-
+	if (url.length==0) return;
 	console.log("showImage")
+	latest = url;
 	$.loadImages(url,function () {
-		latest = url;
 		$(".passive").css("background-image","url("+url+")");
 		$(".passive").fadeIn(500,function () {
 			$(".pic:not(.passive)").fadeOut(500,function () {

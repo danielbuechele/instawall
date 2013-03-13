@@ -1,0 +1,83 @@
+@import url(mini-reset.css);
+
+/* ----------------------------------------------------- Browser specific CSS */
+
+.js div { } /* apply only on JavaScript enabled browsers */
+.ie7 div { } /* apply only on Internet Explorer 7 and below */
+.ie6 div { } /* apply only on Internet Explorer 6 and below */
+
+
+@font-face {
+	font-family: 'Bazar';
+	src: url('../font/Bazar.eot?') format('eot'), 
+		 url('../font/Bazar.woff') format('woff'), 
+		 url('../font/Bazar.ttf')  format('truetype'),
+		 url('../font/Bazar.svg#Bazar') format('svg');
+}
+
+
+body {
+	background: url('../img/vertical_cloth.png');
+	min-width: 800px;
+	text-align: center;
+}
+
+h1 {
+	font-size: 100px;
+	margin-top: 100px;
+	color: #d7ceb2;
+	text-shadow: 3px 3px 0px #2c2e38, 5px 5px 0px #5c5f72;
+	font-family: 'Bazar';
+	letter-spacing: 10px;
+}
+
+#search {
+	font-size: 100px;
+	padding: 20px;
+	border: 0;
+	background: white;
+	border-radius: 20px;
+	position: relative;
+	margin-top: 40px;
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 100;
+}
+
+#search input {
+	font-size: 80px;
+	padding: 0px;
+	border: 0;
+	background: white;
+	width: 700px;
+}
+
+#search input:focus {
+	outline: 0;
+}
+
+.pic {
+	width: 100%;
+	height: 100%; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-position: center;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: none;
+}
+
+
+
+
+/* ----------------------------------------------------- smaller screens */
+
+@media only screen and (max-width: 640px) { }
+
+/* ----------------------------------------------------- huge screens */
+
+@media only screen and (min-width: 1280px) { }

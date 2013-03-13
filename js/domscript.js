@@ -24,25 +24,47 @@ var needsReload = function () {
 }
 	
 	
-$(function(){	
+$(function(){
+
+	
 	$("#search input").focus();
 	
+	
+	$(".pic").click(function () {
+		hideSearch();
+	});
 	
 	$(document).keypress(function(e) {
 		$("#search input").focus();
 		$("#search").fadeIn();
 	});
 	
+	
+	if (location.hash) {
+		console.log(location.hash.substring(1));
+		setHashtag(location.hash.substring(1));
+	}
+	
+	
+	$(window).bind( 'hashchange', function(e) {
+		console.log(location.hash.substring(1));
+		setHashtag(location.hash.substring(1));
+	});
 
 })
 
-function setHashtag() {
-	hashtag = $("#search input").val();
-	clearTimeout(timer);
+function setHashtag(newHashtag) {
+	if (!newHashtag) {
+		hashtag = $("#search input").val();
+		$.bbq.pushState("#"+hashtag);
+	} else {
+		hashtag = newHashtag;	
+	}
 	
-	$("#search").fadeOut(100, function () {
-		$("#search input").val("");
-	});
+	console.log(hashtag);
+	
+	clearTimeout(timer);
+	hideSearch();
 	
 	url = api.replace("#hashtag",hashtag);
 	$.getJSON(url, function(data) {
@@ -52,6 +74,13 @@ function setHashtag() {
 	});
 	
 	return false;
+}
+
+function hideSearch () {
+	$("#search").fadeOut(100, function () {
+		$("#search input").val("");
+		$("#search input").focus();
+	});	
 }
 
 function showImage(url) {

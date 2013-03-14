@@ -12,12 +12,12 @@ var needsReload = function () {
 	$.getJSON(url, function(data) {
 		if (data.data[0].images.standard_resolution.url!=latest) {
 			console.log("reload");
-			showImage(data.data[0].images.standard_resolution.url);
+			showImage(data.data[0].images.standard_resolution.url, data.data[0].caption.text);
 
 		} else {
 			console.log("no update needed");	
 		}
-		
+		clearTimeout(timer);
 		timer = setTimeout(needsReload,reloadTime);
 
 	});
@@ -30,8 +30,8 @@ $(function(){
 	$("#search input").focus();
 	
 	
-	$(".pic").click(function () {
-		hideSearch();
+	$(".pics").click(function () {
+		toggleSearch();
 	});
 	
 	$(document).keypress(function(e) {
@@ -64,38 +64,41 @@ function setHashtag(newHashtag) {
 	console.log(hashtag);
 	
 	clearTimeout(timer);
-	hideSearch();
+	toggleSearch();
 	
 	url = api.replace("#hashtag",hashtag);
 	$.getJSON(url, function(data) {
 		console.log("load");
-		showImage(data.data[0].images.standard_resolution.url);
+		showImage(data.data[0].images.standard_resolution.url, data.data[0].caption.text);
 		needsReload();
 	});
 	
 	return false;
 }
 
-function hideSearch () {
-	$("#search").fadeOut(100, function () {
-		$("#search input").val("");
-		$("#search input").focus();
-	});	
+function toggleSearch() {
+
+    if ($("#search").is(':visible')) {
+        $("#search").fadeOut(200, function () {
+            $("#search input").val("");
+            $("#search input").focus();
+        });	
+    } else {
+        $("#search").fadeIn(200);
+    }
 }
 
-function showImage(url) {
+function showImage(url,title) {
 	if (url.length==0) return;
 	console.log("showImage")
 	latest = url;
 	$.loadImages(url,function () {
-		$(".passive").css("background-image","url("+url+")");
-		$(".passive").fadeIn(500,function () {
-			$(".pic:not(.passive)").fadeOut(500,function () {
-				$(".passive").removeClass("passive");
-				$(this).addClass("passive");
-			});
+        document.title = title;
+		$(".pics").append("<div class='pic'></div>");
+		$(".pic:last-child").css("background-image","url("+url+")");
+		$(".pic:last-child").fadeIn(500, function () {
+            $(".pic:not(:last-child)").remove();
 		});
-		
 
 	});
 }
